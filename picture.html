@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="./exif.js"></script>
+    <script type="text/javascript" src="./jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./JQueryRotate.js"></script>
+</head>
+<body>
+    <input type="file" id="picture" accept="image/*" onchange="previewFile()"/>
+    <img src="" id="preview" width="640" height="640" />
+    
+    <!-- <canvas id="canvas" width="640" height="480"></canvas> -->
+</body>
+<script>
+function previewFile(){
+    var file = document.querySelector('input[type=file]').files[0];
+    if(!file){
+        return;
+    }
+    
+    var srcs = getObjectURL(file);
+    console.log(srcs);
+    
+    var preview = document.getElementById("preview");
+    preview.src = srcs;
+   
+    var orientation;
+    EXIF.getData(file, function(){
+        console.log(EXIF.getAllTags(this));
+        var orientation = EXIF.getTag(this, 'Orientation');
+        switch(orientation){
+            case 1:break;
+            case 6: $("#preview").rotate(90);break;
+            case 8: $("#preview").rotate(270);break;
+            case 3: $("#preview").rotate(180);break;
+            default:console.log("invalid");
+        }
+    });
+    
+    
+    
+}
+
+function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) {
+            url = window.createObjectURL(file)
+        } else if (window.URL != undefined) {
+            url = window.URL.createObjectURL(file)
+        } else if (window.webkitURL != undefined) {
+            url = window.webkitURL.createObjectURL(file)
+        }
+        return url
+    };
+</script>
+</html>
