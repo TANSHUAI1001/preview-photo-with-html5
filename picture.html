@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script type="text/javascript" src="./exif.js"></script>
-    <script type="text/javascript" src="./jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="./JQueryRotate.js"></script>
+    <script type="text/javascript" src="exif.js"></script>
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="JQueryRotate.js"></script>
+    <!-- <link  href="cropper.css" rel="stylesheet">
+    <script src="cropper.js"></script> -->
 </head>
 <body>
     <input type="file" id="picture" accept="image/*" onchange="previewFile()"/>
-    <img src="" id="preview" width="640" height="640" />
+    <!-- capture="camera" -->
+    <div>
+        <img src="" id="preview" width="640" height="640" style="max-width: 100%;max-height: 100%;" />
+    </div>    
     
     <!-- <canvas id="canvas" width="640" height="480"></canvas> -->
 </body>
@@ -28,7 +33,6 @@ function previewFile(){
     var preview = document.getElementById("preview");
     preview.src = srcs;
    
-    var orientation;
     EXIF.getData(file, function(){
         console.log(EXIF.getAllTags(this));
         var orientation = EXIF.getTag(this, 'Orientation');
@@ -41,7 +45,7 @@ function previewFile(){
         }
     });
     
-    
+   
     
 }
 
