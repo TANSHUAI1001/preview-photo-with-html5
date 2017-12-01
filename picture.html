@@ -7,7 +7,7 @@
     <title>Document</title>
     <script type="text/javascript" src="exif.js"></script>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="JQueryRotate.js"></script>
+    <!-- <script type="text/javascript" src="JQueryRotate.js"></script> -->
     <!-- <link  href="cropper.css" rel="stylesheet">
     <script src="cropper.js"></script> -->
     <script src="http://192.168.2.185:8000/target/target-script-min.js#anonymous"></script>
@@ -16,7 +16,7 @@
     <input type="file" id="picture" accept="image/*" onchange="previewFile()"/>
     <!-- capture="camera" -->
     <div>
-        <img src="" id="preview" width="640" height="640" style="max-width: 100%;max-height: 100%;" />
+        <img src="" id="preview" style="max-width: 640px;max-height: 640px;" />
     </div>    
     
     <!-- <canvas id="canvas" width="640" height="480"></canvas> -->
@@ -37,11 +37,32 @@ function previewFile(){
     EXIF.getData(file, function(){
         console.log(EXIF.getAllTags(this));
         var orientation = EXIF.getTag(this, 'Orientation');
+        // switch(orientation){
+        //     case 1:break;
+        //     case 6: $("#preview").rotate(90);break;
+        //     case 8: $("#preview").rotate(270);break;
+        //     case 3: $("#preview").rotate(180);break;
+        //     default:console.log("invalid");
+        // }
+        console.log(orientation);
         switch(orientation){
-            case 1:break;
-            case 6: $("#preview").rotate(90);break;
-            case 8: $("#preview").rotate(270);break;
-            case 3: $("#preview").rotate(180);break;
+            case 1:
+                break;
+            case 6: 
+                var height = $("#preview").height();
+                var width = $("#preview").width();
+                var a = (height - width)/2,b = (width - height)/2;
+                $("#preview").css({"transform":"translate("+a+"px,"+b+"px) rotate(90deg)"}); 
+                break;
+            case 8: 
+                var height = $("#preview").height();
+                var width = $("#preview").width();
+                var a = (height - width)/2,b = (width - height)/2;
+                $("#preview").css({"transform":"translate("+a+"px,"+b+"px) rotate(270deg)"}); 
+                break;
+            case 3: 
+                $("#preview").css({"transform":"rotate(180deg)"}); 
+                break;
             default:console.log("invalid");
         }
     });
