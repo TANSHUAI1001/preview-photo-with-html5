@@ -6,6 +6,18 @@
  ```
  $("#preview").css({"transform":"translate("+a+"px,"+b+"px) rotate(90deg)"});
 ```
+使用css样式垂直居中：
+```
+{
+    display: table-cell;
+    text-align:center;
+    vertical-align: middle;
+}
+```
+使用外层div#container旋转不会出现错位，直接旋转img会出现错位
+```
+ $("#container").css({"transform":"rotate(90deg)"}); 
+ ```
 ## weinre远程调试
 ```
 npm -g install weinre
