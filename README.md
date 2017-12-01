@@ -3,8 +3,9 @@
 ## exif.js获取exif信息。
 ## JQueryRotate.js 不同设备可能会显示旋转的图片，获取exif信息摆正。
 ## 使用css3将图片旋转移动
+ ```
  $("#preview").css({"transform":"translate("+a+"px,"+b+"px) rotate(90deg)"});
-
+```
 ## weinre远程调试
 ```
 npm -g install weinre
