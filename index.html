@@ -2,35 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 <body>
-    <video id="video" width="640" height="480" autoplay></video>
+    <video id="video" width="168" height="240" autoplay></video>
+	<button id="open">Open Camera</button>
     <button id="snap">Snap Photo</button>
-    <canvas id="canvas" width="640" height="480"></canvas>
+	<button id="close">Close Camera</button>
+    <canvas id="canvas" width="168" height="240"></canvas>
 </body>
 <script>
-    // Grab elements, create settings, etc.
-var video = document.getElementById('video');
-
-// Get access to the camera!
-if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    // Not adding `{ audio: true }` since we only want video now
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-        video.src = window.URL.createObjectURL(stream);
-        video.play();
-    });
-}
 // Elements for taking the snapshot
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 var video = document.getElementById('video');
 
-// Trigger photo take
-document.getElementById("snap").addEventListener("click", function() {
-	context.drawImage(video, 0, 0, 640, 480);
+// $("#open").on
+document.getElementById("open").addEventListener("click", function() {
+    // Get access to the camera!
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ 
+            video: {width: 168,height: 240}
+        }).then(function(stream) {
+            // $("#close").on
+            document.getElementById("close").addEventListener("click", function() {
+                stream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+            });
+            if ("srcObject" in video) {
+                video.srcObject = stream;
+            } else {
+                // 防止在新的浏览器里使用
+                video.src = window.URL.createObjectURL(stream);
+            }
+        
+            video.play();
+        }).catch(function(err) {
+            /* 处理error */
+            console.log(err);
+        });
+    }else{
+        console.log("浏览器版本不支持！");
+    }
 });
+
+// $("#open").click();
+
+// $("#snap").on
+document.getElementById("snap").addEventListener("click", function() {
+    context.drawImage(video, 0, 0, 168, 240);
+    // var data=canvas.toDataURL();// 默认png,前22位base64类型前缀data:image/png;base64,
+    var data=canvas.toDataURL("image/jpeg");//jpeg文件更小,前23位base64类型前缀等data:image/jpeg;base64,
+    console.log(data);
+    console.log(data.substr(23));
+    // var imgData=context.getImageData(0, 0, 168, 240);
+    // console.log(imgData);
+});
+
 </script>
 </html>

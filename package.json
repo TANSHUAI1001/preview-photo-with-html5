@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "webrtc-adapter": "^7.2.8"
   }
 }

@@ -56,7 +56,7 @@ http.createServer(function (request, response) {
          });   
     }
   
-}).listen(3000,"0.0.0.0");
+}).listen(3000,"127.0.0.1");
 
 // 终端打印如下信息
-console.log('Server running at http://0.0.0.0:3000/');
+console.log('Server running at http://127.0.0.1:3000/');

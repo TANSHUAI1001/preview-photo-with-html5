@@ -33,3 +33,9 @@ weinre -boundHost 192.168.2.185 -httpPort 8000
 http://192.168.2.185:8000/client/#anonymous
 ```
 来查看控制台输出等调试功能
+
+# webcam与canvas
+
+https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia
+http://www.w3school.com.cn/tags/html_ref_canvas.asp
+https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial
